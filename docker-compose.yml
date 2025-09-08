@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: wcrt-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wcrt-client:latest
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3002:3002"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
